@@ -1,24 +1,33 @@
-const calculator = require('./calculator');
+var express = require('express');
+var hbs  = require('express-handlebars');
 
-const functionName = process.argv[2];
-const param1 = parseInt(process.argv[3]);
-const param2 = parseInt(process.argv[4]);
+var app = express();
 
-switch(functionName) {
-  case "add":
-    var result = calculator.add(param1, param2);
-    break;
-  case "sub":
-    var result = calculator.sub(param1, param2);
-    break;
-   case "mul":
-    var result = calculator.mul(param1, param2);
-    break;
-  case "cub":
-    var result = calculator.cub(param1);
-    break;
-  default:
-    var result = "Not valid expression";
-}
+app.engine('hbs', hbs({
+	extname: 'hbs',
+	partialsDir: __dirname + '/views/partials/'
+}));
 
-console.log(result);
+app.set('view engine', 'hbs');
+
+// Handlebars.registerHelper('getYear', () => {
+//   var d = new Date();
+//   var year = d.getFullYear();
+//   return year;
+// });
+
+app.get('/', (req, res) => {
+	res.render('index', {title: 'Home'});
+});
+
+app.get('/about', (req, res) => {
+	res.render('pages/about', {title: 'About'});
+});
+
+app.get('/contact', (req, res) => {
+	res.render('pages/contact', {title: 'Contact'});
+});
+
+app.listen(3000, () => {
+	console.log('Server Running on port 3000');
+});
