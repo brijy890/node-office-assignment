@@ -1,14 +1,11 @@
 var express = require('express');
-var hbs  = require('express-handlebars');
+var hbs  = require('hbs');
 
 var app = express();
 
-app.engine('hbs', hbs({
-	extname: 'hbs',
-	partialsDir: __dirname + '/views/partials/'
-}));
-
 app.set('view engine', 'hbs');
+
+hbs.registerPartial('header');
 
 // Handlebars.registerHelper('getYear', () => {
 //   var d = new Date();
